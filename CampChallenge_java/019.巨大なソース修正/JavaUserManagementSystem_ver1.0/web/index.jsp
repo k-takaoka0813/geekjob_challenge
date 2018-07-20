@@ -1,3 +1,4 @@
+<%@page import="jums.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -11,5 +12,6 @@
         付随して修正や削除を行うことができます</h3><br>
     <a href="insert">新規登録</a><br>
     <a href="" >検索(修正・削除)</a><br>
+    <%=JumsHelper.getInstance().home()%>
 </body>
 </html>

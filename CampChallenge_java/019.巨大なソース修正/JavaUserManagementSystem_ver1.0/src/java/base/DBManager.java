@@ -12,7 +12,7 @@ public class DBManager {
         Connection con = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/challenge_db","root","root");
             System.out.println("DBConnected!!");
             return con;
         }catch(ClassNotFoundException e){

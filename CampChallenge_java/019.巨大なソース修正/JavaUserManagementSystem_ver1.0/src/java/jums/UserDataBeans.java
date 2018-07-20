@@ -1,7 +1,5 @@
 package jums;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -10,23 +8,15 @@ import java.util.Date;
  * @version 1.00
  * @author hayashi-s
  */
-public class UserDataDTO {
-    private int userID;
+public class UserDataBeans {
     private String name;
-    private Calendar birthday;
+    private int y;
+    private int m;
+    private int d;
     private String tell;
     private int type;
-    private String comment;
-    private Timestamp newDate;
-    
-    
-    public int getUserID() {
-        return userID;
-    }
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-    
+    private String comment;    
+        
     public String getName(){
         return name;
     }
@@ -34,11 +24,25 @@ public class UserDataDTO {
         this.name = name;
     }
     
-    public java.sql.Date getBirthday(){
-        return new java.sql.Date(birthday.getTimeInMillis());
+    public int getY(){
+        return y;
     }
-    public void setBirthday(Calendar birthday){
-        this.birthday = birthday;
+    public void setY(int y){
+        this.y = y;
+    }
+    
+    public int getM(){
+        return m;
+    }
+    public void setM(int m){
+        this.m = m;
+    }
+    
+    public int getD(){
+        return d;
+    }
+    public void setD(int d){
+        this.d = d;
     }
     
     public String getTell(){
@@ -62,11 +66,4 @@ public class UserDataDTO {
         this.comment = comment;
     }
     
-    public Timestamp getNewDate() {
-        return newDate;
-    }
-    public void setNewDate(Timestamp newDate) {
-        this.newDate = newDate;
-    }
-
 }

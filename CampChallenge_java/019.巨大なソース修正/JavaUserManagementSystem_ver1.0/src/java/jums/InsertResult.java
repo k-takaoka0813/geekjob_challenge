@@ -30,20 +30,30 @@ public class InsertResult extends HttpServlet {
             throws ServletException, IOException {
         
         //セッションスタート
-        HttpSession session = request.getSession();
-        
         try{
+            HttpSession session = request.getSession();
+            
+            //＊insertresultにて直リンク防止用の処理が存在しない。insertからinsertconfirmへの流れを参考に修正しなさい
+            request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
+            String accesschk = request.getParameter("ac");
+            if(accesschk == null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            
             //ユーザー情報に対応したJavaBeansオブジェクトに格納していく
+            UserDataBeans udb = (UserDataBeans)session.getAttribute("userdata");
             UserDataDTO userdata = new UserDataDTO();
-            userdata.setName((String)session.getAttribute("name"));
-            Calendar birthday = Calendar.getInstance();
-            userdata.setBirthday(birthday.getTime());
-            userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
-            userdata.setTell((String)session.getAttribute("tell"));
-            userdata.setComment((String)session.getAttribute("comment"));
+            userdata.setName(udb.getName());
+            //*入力された生年月日の情報がDBに正しく格納されていない。これを修正しなさい
+            Calendar cl = Calendar.getInstance();
+            cl.set(udb.getY(), udb.getM()-1, udb.getD(), 0, 0, 0);
+            userdata.setBirthday(cl);
+            userdata.setType(udb.getType());
+            userdata.setTell(udb.getTell());
+            userdata.setComment(udb.getComment());
             
             //DBへデータの挿入
-            UserDataDAO .getInstance().insert(userdata);
+            UserDataDAO.getInstance().insert(userdata);
             
             request.getRequestDispatcher("/insertresult.jsp").forward(request, response);
         }catch(Exception e){

@@ -1,6 +1,7 @@
 package jums;
 
 import java.io.IOException;
+import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class InsertConfirm extends HttpServlet {
             HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
             String accesschk = request.getParameter("ac");
-            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+            if(accesschk == null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
                 throw new Exception("不正なアクセスです");
             }
             
@@ -42,15 +43,18 @@ public class InsertConfirm extends HttpServlet {
             String type = request.getParameter("type");
             String tell = request.getParameter("tell");
             String comment = request.getParameter("comment");
+            
+            UserDataBeans userdata = new UserDataBeans();
+            userdata.setName(name);
+            userdata.setY(Integer.parseInt(year));
+            userdata.setM(Integer.parseInt(month));
+            userdata.setD(Integer.parseInt(day));
+            userdata.setType(Integer.parseInt(type));
+            userdata.setTell(tell);
+            userdata.setComment(comment);
 
             //セッションに格納
-            session.setAttribute("name", name);
-            session.setAttribute("year", year);
-            session.setAttribute("month",month);
-            session.setAttribute("day", day);
-            session.setAttribute("type", type);
-            session.setAttribute("tell", tell);
-            session.setAttribute("comment", comment);
+            session.setAttribute("userdata", userdata);
             System.out.println("Session updated!!");
             
             request.getRequestDispatcher("/insertconfirm.jsp").forward(request, response);
